@@ -115,38 +115,38 @@ python3 inference.py \
   </tr>
   <tr>
     <td>There is a large building on fire with intense flames and a lot of smoke billowing out. The building is surrounded by water, and there are some boats visible. A loud explosion is heard, followed by the sound of fire crackling and burning. The sky is clear, and there are some buildings in the background.</td>
-    <td><video src="AV-GRPO/assets/ltx2.3_1.mp4" width="100%" controls></video></td>
-    <td><video src="AV-GRPO/assets/av_grpo_full_1.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/ltx2.3_1.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/av_grpo_full_1.mp4" width="100%" controls></video></td>
   </tr>
   <tr>
     <td>A woman is playing the violin in an orchestra setting. She is wearing a black top and green pants. The background shows other musicians with various instruments, and there's a stained glass window behind them. The sound of the violin blends with the orchestra's accompaniment.</td>
-    <td><video src="AV-GRPO/assets/ltx2.3_2.mp4" width="100%" controls></video></td>
-    <td><video src="AV-GRPO/assets/av_grpo_full_2.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/ltx2.3_2.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/av_grpo_full_2.mp4" width="100%" controls></video></td>
   </tr>
   <tr>
     <td>A small stream flows over rocks and grass, with the water clear and the rocks covered in moss. A cartoonish green character with a round body and a single eye jumps into the water, making a croaking sound.</td>
-    <td><video src="AV-GRPO/assets/ltx2.3_3.mp4" width="100%" controls></video></td>
-    <td><video src="AV-GRPO/assets/av_grpo_full_3.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/ltx2.3_3.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/av_grpo_full_3.mp4" width="100%" controls></video></td>
   </tr>
   <tr>
     <td>A child pushes a toy truck, says \"Vroom,\" pulls it back, says \"Beep,\" then crashes it into a block and shouts \"Boom.\"</td>
-    <td><video src="AV-GRPO/assets/ltx2.3_4.mp4" width="100%" controls></video></td>
-    <td><video src="AV-GRPO/assets/av_grpo_full_4.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/ltx2.3_4.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/av_grpo_full_4.mp4" width="100%" controls></video></td>
   </tr>
   <tr>
     <td>A colossal waterfall thunders down from mist-shrouded emerald cliffs into a sapphire abyss, its deafening crash echoing through the valley, sending up explosive plumes of spray that catch the morning light.</td>
-    <td><video src="AV-GRPO/assets/ltx2.3_5.mp4" width="100%" controls></video></td>
-    <td><video src="AV-GRPO/assets/av_grpo_full_5.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/ltx2.3_5.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/av_grpo_full_5.mp4" width="100%" controls></video></td>
   </tr>
   <tr>
     <td>Two men face each other nose-to-nose in a tense confrontation within a dimly lit bank. The older man says, \"我们才不会害怕残忍的流氓.\" The clown replies, \"你知道吗？你让我想起了我的父亲，我恨我的父亲.\" The audio shows suffocating silence broken by tense dialogue.</td>
-    <td><video src="AV-GRPO/assets/ltx2.3_6.mp4" width="100%" controls></video></td>
-    <td><video src="AV-GRPO/assets/av_grpo_full_6.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/ltx2.3_6.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/av_grpo_full_6.mp4" width="100%" controls></video></td>
   </tr>
   <tr>
     <td>In a medium close-up, a young woman with blonde shoulder-length hair stands in a lavender field under a twilight sky. She says, \"告诉我这条光滑的绿色带子见证了多少年的沉重。\" The audio features gentle, atmospheric singing establishing a calm and wistful mood.</td>
-    <td><video src="AV-GRPO/assets/ltx2.3_7.mp4" width="100%" controls></video></td>
-    <td><video src="AV-GRPO/assets/av_grpo_full_7.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/ltx2.3_7.mp4" width="100%" controls></video></td>
+    <td><video src="https://raw.githubusercontent.com/zhiyuxu03/AV-GRPO/main/AV-GRPO/assets/av_grpo_full_7.mp4" width="100%" controls></video></td>
   </tr>
 </table>
 
