@@ -1,0 +1,110 @@
+nohup: ignoring input
+
+                           ⚙️  Training Configuration                           
+╭──────────────────────┬───────────────────────────────────────────────────────╮
+│ 🎬 Model             │                                                       │
+│   Base               │ /data/zhiyuxu/AV-GRPO/LTX-2.3/ltx-2.3-22b-dev.safete… │
+│   Text Encoder       │ /data/zhiyuxu/AV-GRPO/gemma-3-12b-it-qat-q4_0-unquan… │
+│   Training Mode      │ LORA                                                  │
+│   Load Checkpoint    │ —                                                     │
+│                      │                                                       │
+│ 🔗 LoRA              │                                                       │
+│   Rank / Alpha       │ 32 / 32                                               │
+│   Dropout            │ 0.0                                                   │
+│   Target Modules     │ to_k, to_q, to_v, to_out.0                            │
+│                      │                                                       │
+│ 🎯 Strategy          │                                                       │
+│   Name               │ text_to_video                                         │
+│   Audio              │ ✓                                                     │
+│   First Frame Cond P │ 0.5                                                   │
+│                      │                                                       │
+│ ⚡ Optimization      │                                                       │
+│   Steps              │ 1,440                                                 │
+│   Learning Rate      │ 1.00e-05                                              │
+│   Batch Size         │ 1                                                     │
+│   Grad Accumulation  │ 1                                                     │
+│   Optimizer          │ adamw                                                 │
+│   Scheduler          │ linear                                                │
+│   Max Grad Norm      │ 1.0                                                   │
+│   Grad Checkpointing │ ✓                                                     │
+│                      │                                                       │
+│ 🚀 Acceleration      │                                                       │
+│   Mixed Precision    │ bf16                                                  │
+│   Quantization       │ —                                                     │
+│   Text Encoder 8bit  │ ✓                                                     │
+│                      │                                                       │
+│ 🎥 Validation        │                                                       │
+│   Prompts            │ 1 prompt(s)                                           │
+│   Interval           │ Every 2500 steps                                      │
+│   Video Dims         │ 960x544, 97 frames                                    │
+│   Frame Rate         │ 24.0 fps                                              │
+│   Inference Steps    │ 15                                                    │
+│   CFG Scale          │ 4.0                                                   │
+│   STG                │ scale=1.0; blocks=29; mode=stg_av                     │
+│   Seed               │ 42                                                    │
+│                      │                                                       │
+│ 📂 Data & Output     │                                                       │
+│   Dataset            │ /data/zhiyuxu/scenes_output_dir/.precomputed          │
+│   Dataloader Workers │ 2                                                     │
+│   Output Dir         │ /data/zhiyuxu/AV-GRPO1/outputs/ltx2_lora              │
+│   Seed               │ 42                                                    │
+│                      │                                                       │
+│ 🔌 Integrations      │                                                       │
+│   Checkpoints        │ Every 32 steps (keep 10)                              │
+│   W&B                │ Disabled                                              │
+│   HF Hub             │ Disabled                                              │
+╰──────────────────────┴───────────────────────────────────────────────────────╯
+
+DEBUG    [rank 0] 🎯 Using TextToVideoStrategy training strategy  __init__.py:57
+         (audio enabled 🔈)                                                     
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:06<00:26,  6.69s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:16<00:25,  8.46s/it]W0730 08:40:23.521000 459042 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 459122 closing signal SIGTERM
+W0730 08:40:23.522000 459042 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 459123 closing signal SIGTERM
+W0730 08:40:23.523000 459042 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 459124 closing signal SIGTERM
+W0730 08:40:23.524000 459042 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 459125 closing signal SIGTERM
+W0730 08:40:23.533000 459042 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 459126 closing signal SIGTERM
+W0730 08:40:23.534000 459042 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 459128 closing signal SIGTERM
+W0730 08:40:23.534000 459042 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 459129 closing signal SIGTERM
+E0730 08:40:25.392000 459042 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: -15) local_rank: 5 (pid: 459127) of binary: /usr/bin/python3
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/commands/launch.py", line 1417, in <module>
+    main()
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/commands/launch.py", line 1413, in main
+    launch_command(args)
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/commands/launch.py", line 1394, in launch_command
+    multi_gpu_launcher(args)
+  File "/usr/local/lib/python3.10/dist-packages/accelerate/commands/launch.py", line 1023, in multi_gpu_launcher
+    distrib_run.run(args)
+  File "/usr/local/lib/python3.10/dist-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/usr/local/lib/python3.10/dist-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/usr/local/lib/python3.10/dist-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+train.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-07-30_08:40:23
+  host      : dev-e0bc465c-0.dev-e0bc465c.03a897b6-c324-44e0-8fdd-f14241a3c94e.svc.cluster.local
+  rank      : 5 (local_rank: 5)
+  exitcode  : -15 (pid: 459127)
+  error_file: <N/A>
+  traceback : Signal 15 (SIGTERM) received by PID 459127
+============================================================
