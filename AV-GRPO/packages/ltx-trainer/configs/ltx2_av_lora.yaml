@@ -1,0 +1,249 @@
+# =============================================================================
+# LTX-2 Audio-Video Full Training Configuration
+# =============================================================================
+#
+# This configuration is for FULL fine-tuning of the LTX-2 model for
+# text-to-video generation. It supports both video-only and joint audio-video
+# training modes.
+#
+# Use this configuration when you want to:
+#   - Fully fine-tune LTX-2 on your own video dataset
+#   - Train with or without audio generation
+#   - Create custom video generation styles or audiovisual concepts
+#
+# Dataset structure for text-to-video training:
+#   preprocessed_data_root/
+#   ├── latents/        # Video latents (VAE-encoded videos)
+#   ├── conditions/     # Text embeddings for each video
+#   └── audio_latents/  # Audio latents (only if with_audio: true)
+#
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Model Configuration
+# -----------------------------------------------------------------------------
+# Specifies the base model to fine-tune and the training mode.
+model:
+  # Path to the LTX-2 model checkpoint (.safetensors file)
+  # This should be a local path to your downloaded model
+  model_path: ".../AV-GRPO/LTX-2.3/ltx-2.3-22b-dev.safetensors"
+
+  # Path to the text encoder model directory
+  # For LTX-2, this is typically the Gemma-based text encoder
+  text_encoder_path: ".../AV-GRPO/gemma-3-12b-it-qat-q4_0-unquantized"
+
+  # Training mode: "full" for full fine-tuning
+  training_mode: "full"
+
+  # Optional: Path to resume training from a checkpoint
+  # Can be a checkpoint file (.safetensors) or directory (uses latest checkpoint)
+  load_checkpoint: null
+
+# -----------------------------------------------------------------------------
+# LoRA Configuration (NOT USED IN FULL TRAINING)
+# -----------------------------------------------------------------------------
+lora:
+  rank: 32
+  alpha: 32
+  dropout: 0.0
+  target_modules:
+    - "to_k"
+    - "to_q"
+    - "to_v"
+    - "to_out.0"
+
+# -----------------------------------------------------------------------------
+# Training Strategy Configuration
+# -----------------------------------------------------------------------------
+# Defines the text-to-video training approach.
+training_strategy:
+  # Strategy name: "text_to_video" for standard text-to-video training
+  name: "text_to_video"
+
+  # Probability of conditioning on the first frame during training
+  # Higher values train the model to perform better in image-to-video (I2V) mode,
+  # where a clean first frame is provided and the model generates the rest of the video
+  first_frame_conditioning_p: 0.5
+
+  # Enable joint audio-video training
+  # Set to true if your dataset includes audio and you want to train the audio branch
+  with_audio: true
+
+  # Directory name (within preprocessed_data_root) containing audio latents
+  # Only used when with_audio is true
+  audio_latents_dir: "audio_latents"
+
+# -----------------------------------------------------------------------------
+# Optimization Configuration
+# -----------------------------------------------------------------------------
+# Controls the training optimization parameters.
+optimization:
+  # The learning rate parameter here is ineffective. Please go to .../AV-GRPO/packages/ltx-trainer/src/ltx_trainer/trainer.py to adjust parameters such as start_lr, peak_lr, etc. We use a cosine decay strategy.
+  learning_rate: 1e-5
+  # The learning rate parameter here is ineffective. Please go to .../AV-GRPO/packages/ltx-trainer/src/ltx_trainer/trainer.py to adjust parameters such as start_lr, peak_lr, etc. We use a cosine decay strategy. 
+
+  # Total number of training steps
+  steps: 1440
+
+  # Batch size per GPU
+  batch_size: 1
+
+  # Note: Since the audio tower and video tower have different parameters, please go directly to the _training_step function to set the two KL coefficients. The location has been marked.
+  beta_kl: 0.01
+  # Note: Since the audio tower and video tower have different parameters, please go directly to the _training_step function to set the two KL coefficients. The location has been marked.
+
+  clip_range: 0.2                      
+  grpo_samples_per_step: 8             
+  grpo_timesteps_per_sample: 15  
+
+
+  # Note: Since the audio tower and video tower have different noise levels, we have already set the two noise level parameters in the _training_step function. No changes are needed.
+  sde_noise_a: 0.02  
+  # Note: Since the audio tower and video tower have different noise levels, we have already set the two noise level parameters in the _training_step function. No changes are needed.
+  
+
+
+  # Maximum gradient norm for clipping (helps training stability)
+  max_grad_norm: 1.0
+
+  # Optimizer type: "adamw" (standard) or "adamw8bit" (memory-efficient)
+  optimizer_type: "adamw"
+
+  # Learning rate scheduler type
+  # Options: "constant", "linear", "cosine", "cosine_with_restarts", "polynomial"
+  scheduler_type: "linear"
+
+  # Additional scheduler parameters (depends on scheduler_type)
+  scheduler_params: { }
+
+  # Enable gradient checkpointing to reduce memory usage
+  enable_gradient_checkpointing: true
+
+# -----------------------------------------------------------------------------
+# Acceleration Configuration
+# -----------------------------------------------------------------------------
+# Hardware acceleration and memory optimization settings.
+acceleration:
+  # Mixed precision training mode
+  # Options: "no" (fp32), "fp16" (half precision), "bf16" (bfloat16, recommended)
+  mixed_precision_mode: "bf16"
+
+  # Model quantization for reduced memory usage
+  quantization: null
+
+  # Load text encoder in 8-bit precision to save memory
+  load_text_encoder_in_8bit: true
+
+# -----------------------------------------------------------------------------
+# Data Configuration
+# -----------------------------------------------------------------------------
+# Specifies the training data location and loading parameters.
+data:
+  # Only the path needs to be modified. This data is not needed for training.
+  preprocessed_data_root: ".../AV-GRPO/scenes_output_dir/.precomputed"
+  # Only the path needs to be modified. This data is not needed for training.
+
+  # Number of worker processes for data loading
+  num_dataloader_workers: 2
+
+# -----------------------------------------------------------------------------
+# Validation Configuration
+# -----------------------------------------------------------------------------
+# Controls validation video generation during training.
+validation:
+  # **Deprecated**
+  prompts:
+    - "A person walks normally down a quiet corridor, the soles of their shoes steadily tapping the floor, producing a rhythmic, evenly spaced \"tap, tap\" sound."
+    # - "A cat playing with a toy, accompanied by sad music in the background."
+    # - "A ship sailing on the ocean, accompanied by cheerful music in the background." 
+  # **Deprecated**
+
+
+  # Negative prompt to avoid unwanted artifacts
+  negative_prompt: "worst quality, inconsistent motion, blurry, jittery, distorted"
+
+  freeze_modality: "audio" # train the video DiTs first
+  
+  num_samples: 1
+  # Optional: First frame images for image-to-video validation
+  images: null
+
+  # Output video dimensions [width, height, frames]
+  video_dims: [ 960, 544, 97 ]
+
+  # Frame rate for generated videos
+  frame_rate: 24.0
+
+  # Random seed for reproducible validation outputs
+  seed: 42
+
+  # Number of denoising steps for validation inference
+  inference_steps: 15
+
+  # The Generate validation logic is deprecated. To avoid interfering with training, please change the number below to a value much larger than the total training steps.
+  interval: 2500
+
+  # Number of videos to generate per prompt
+  videos_per_prompt: 1
+
+  # Classifier-free guidance scale
+  guidance_scale: 4.0
+
+  # STG (Spatio-Temporal Guidance) parameters
+  stg_scale: 1.0
+  stg_blocks: [29]
+  stg_mode: "stg_av"
+
+  # Whether to generate audio in validation samples
+  generate_audio: true
+
+  # Skip validation at the beginning of training (step 0)
+  skip_initial_validation: false
+
+# -----------------------------------------------------------------------------
+# Checkpoint Configuration
+# -----------------------------------------------------------------------------
+# Controls model checkpoint saving during training.
+checkpoints:
+  # Save a checkpoint every N steps
+  interval: 48
+
+  # Number of most recent checkpoints to keep
+  keep_last_n: 3
+
+  # Precision to use when saving checkpoint weights
+  precision: "bfloat16"
+
+# -----------------------------------------------------------------------------
+# Flow Matching Configuration
+# -----------------------------------------------------------------------------
+# Parameters for the flow matching training objective.
+flow_matching:
+  timestep_sampling_mode: "shifted_logit_normal"
+  timestep_sampling_params: { }
+
+# -----------------------------------------------------------------------------
+# Hugging Face Hub Configuration
+# -----------------------------------------------------------------------------
+hub:
+  push_to_hub: false
+  hub_model_id: null
+
+# -----------------------------------------------------------------------------
+# Weights & Biases Configuration
+# -----------------------------------------------------------------------------
+wandb:
+  enabled: false
+  project: "ltx-2-full-lora"
+  entity: null
+  tags: [ "ltx2", "lora" ]
+  log_validation_videos: true
+
+# -----------------------------------------------------------------------------
+# General Configuration
+# -----------------------------------------------------------------------------
+# Random seed for reproducibility
+seed: 42
+
+# Directory to save outputs
+output_dir: ".../AV-GRPO/outputs/ltx2_full"
