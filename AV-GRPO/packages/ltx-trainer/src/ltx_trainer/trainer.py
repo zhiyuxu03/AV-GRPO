@@ -197,7 +197,7 @@ class LtxvTrainer:
         from safetensors.torch import load_file
         from ltx_trainer.model_loader import load_model
         
-        model_path = "/.../AV-GRPO/LTX-2.3/ltx-2.3-22b-dev.safetensors"
+        model_path = self._config.model.model_path
         
         if IS_MAIN_PROCESS:
             print(f"[GRPO] Loading reference model from {model_path}...")
@@ -257,7 +257,7 @@ class LtxvTrainer:
     
     def _load_trajectory_cache(self):
         """Load pre-saved trajectory cache file"""
-        cache_path = "/.../AV-GRPO/outputs/trajectory/validation_trajectory_cached.pt"
+        cache_path = str(Path(self._config.output_dir).parent / "trajectory" / "validation_trajectory_cached.pt")
         if not os.path.exists(cache_path):
             self._trajectory_cache = None
             return
@@ -374,7 +374,7 @@ class LtxvTrainer:
                 project="AV-GRPO",
                 entity="",
                 mode="offline",
-                dir="/.../AV-GRPO/outputs/",
+                dir = str(Path(self._config.output_dir).parent)
                 name="AV-GRPO-training",
                 config=self._config.__dict__,
                 save_code=True
@@ -830,7 +830,7 @@ class LtxvTrainer:
                 print(f"[DEBUG] audio_advantages has nan: {torch.isnan(audio_advantages).any().item()}")
 
         
-        traj_dir = Path(".../AV-GRPO/outputs/sample_trajectory_train")
+        traj_dir = Path(self._config.output_dir).parent / "sample_trajectory_train"
         traj_files = sorted(traj_dir.glob(f"traj_rank{rank}_sample*.pt"))
         if not traj_files:
             if rank == 0:
@@ -1163,7 +1163,7 @@ class LtxvTrainer:
         from pathlib import Path
         
         rank = dist.get_rank() if dist.is_initialized() else 0
-        traj_dir = Path(".../AV-GRPO/outputs/sample_trajectory")
+        traj_dir = Path(self._config.output_dir).parent / "sample_trajectory"
         traj_files = list(traj_dir.glob(f"traj_rank{rank}_sample*.pt"))
         has_files = len(traj_files) > 0
         
@@ -1217,7 +1217,7 @@ class LtxvTrainer:
         import json
         import random
         from collections import OrderedDict
-        PROMPT_JSON_PATH = ".../AV-GRPO/Dataset/dataset.json"
+        PROMPT_JSON_PATH = str(Path(self._config.output_dir).parent.parent / "Dataset" / "dataset.json")
         
         with open(PROMPT_JSON_PATH, 'r', encoding='utf-8') as f:
             prompt_data = json.load(f)
@@ -1884,7 +1884,7 @@ class LtxvTrainer:
         cached_embeddings = self._get_prompt_embedding(my_prompt)
 
         # ========== Generate reference trajectory cache (forced regeneration conditions: modality switch or initial validation) ==========
-        cache_dir = ".../AV-GRPO/outputs/trajectory"
+        cache_dir = str(Path(self._config.output_dir).parent / "trajectory")
         cache_path = os.path.join(cache_dir, f"validation_trajectory_cached_rank{rank}.pt")
 
         # Force regeneration: modality switch (skip_reward_processing=True) or initial validation (global_step==0)

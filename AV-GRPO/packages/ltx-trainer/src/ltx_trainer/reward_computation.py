@@ -5,7 +5,7 @@ import math
 import warnings
 import torch
 import numpy as np
-
+from pathlib import Path
 
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
 os.environ["OMP_NUM_THREADS"] = "1"
@@ -28,7 +28,7 @@ _JAVISDIT_PATH_ADDED = False
 def _ensure_javisdit_path():
     global _JAVISDIT_PATH_ADDED
     if not _JAVISDIT_PATH_ADDED:
-        javisdit_root = ".../AV-GRPO/JavisDiT"
+        javisdit_root = str(Path(__file__).resolve().parents[4] / "JavisDiT")
         if javisdit_root not in sys.path:
             sys.path.insert(0, javisdit_root)
         _JAVISDIT_PATH_ADDED = True
@@ -50,7 +50,7 @@ def _compute_vq_batch(video_paths, prompts, device):
         torch.cuda.ipc_collect()
     
     
-    FIX_PATH = ".../AV-GRPO/JavisDiT"
+    FIX_PATH = str(Path(__file__).resolve().parents[4] / "JavisDiT")
     sys.path.insert(0, FIX_PATH)
 
  
@@ -61,7 +61,7 @@ def _compute_vq_batch(video_paths, prompts, device):
     sys.path.remove(FIX_PATH)
 
 
-    LOCAL_VIDEO_REWARD = ".../AV-GRPO/JavisDiT/checkpoints/VideoReward"
+    LOCAL_VIDEO_REWARD = str(Path(__file__).resolve().parents[4] / "JavisDiT" / "checkpoints" / "VideoReward")
     
     predictor = None
     try:
@@ -215,7 +215,7 @@ def _compute_other_metrics(video_paths, audio_paths, prompts, freeze_modality, d
     try:
         print("🔄 loading Synchformer model...")
         from eval.javisbench.src.synchformer.synchformer import Synchformer as Synch, make_class_grid
-        LOCAL_SYNCHFORMER = ".../AV-GRPO/JavisDiT/checkpoints/synchformer_state_dict.pth"
+        LOCAL_SYNCHFORMER = str(Path(__file__).resolve().parents[4] / "JavisDiT" / "checkpoints" / "synchformer_state_dict.pth")
         synchformer = Synch().to(device).eval()
         sd = torch.load(LOCAL_SYNCHFORMER, weights_only=True)
         synchformer.load_state_dict(sd)
@@ -458,12 +458,13 @@ import os
 import sys
 import json
 import torch
+from pathlib import Path
 
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 
-sys.path.insert(0, ".../AV-GRPO/JavisDiT")
+sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "JavisDiT"))
 from ltx_trainer.reward_computation import _compute_vq_batch
 
 

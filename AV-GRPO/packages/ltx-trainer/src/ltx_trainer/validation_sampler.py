@@ -29,6 +29,7 @@ from ltx_core.components.diffusion_steps import EulerDiffusionStep
 from .video_utils import read_video, save_video
 from .utils import save_image
 import soundfile as sf
+from pathlib import Path
 
 class FlowGRPOSDEDiffusionStep(DiffusionStepProtocol):
     """
@@ -232,7 +233,7 @@ class GenerationConfig:
     sde_noise_level: float = 0.02      
     sde_sigma_max: float | None = None  
     num_samples: int = 4                
-    output_dir: str | Path | None = ".../AV-GRPO" 
+    output_dir: str | Path | None = str(Path(__file__).resolve().parents[4])
     output_prefix: str = "sample"       
     freeze_modality: Literal["video", "audio"] | None = "audio"
     skip_reward_processing: bool = False   
@@ -393,13 +394,15 @@ class ValidationSampler:
             return
 
        
-        LOCAL_VIDEO_REWARD = ".../AV-GRPO/JavisDiT/checkpoints/VideoReward"
-        LOCAL_IMAGEBIND = ".../AV-GRPO/JavisDiT/checkpoints/imagebind_huge.pth"
-        LOCAL_SYNCHFORMER = ".../AV-GRPO/JavisDiT/checkpoints/synchformer_state_dict.pth"
+        AV_GRPO_ROOT = Path(__file__).resolve().parents[4]
+
+        LOCAL_VIDEO_REWARD = str(AV_GRPO_ROOT / "JavisDiT" / "checkpoints" / "VideoReward")
+        LOCAL_IMAGEBIND = str(AV_GRPO_ROOT / "JavisDiT" / "checkpoints" / "imagebind_huge.pth")
+        LOCAL_SYNCHFORMER = str(AV_GRPO_ROOT / "JavisDiT" / "checkpoints" / "synchformer_state_dict.pth")
 
         
         import sys
-        javisdit_root = ".../AV-GRPO/JavisDiT"
+        javisdit_root = str(Path(__file__).resolve().parents[4] / "JavisDiT")
         if javisdit_root not in sys.path:
             sys.path.insert(0, javisdit_root)
 
@@ -1253,7 +1256,7 @@ class ValidationSampler:
         )
 
         # Cache file path: independent for each rank
-        cache_dir = ".../AV-GRPO/outputs/trajectory"
+        cache_dir = str(Path(__file__).resolve().parents[4] / "outputs" / "trajectory")
         cache_path = os.path.join(cache_dir, f"validation_trajectory_cached_rank{rank}.pt")
 
         # In reference generation mode, cache is not used; in normal freezing mode, cache is used.
@@ -1471,7 +1474,7 @@ class ValidationSampler:
                     print(f"💾 Reference trajectory cached for all ranks (rank {rank} saved to {cache_path})")
             else:
                 # Normal training trajectory saving
-                save_dir = Path(".../AV-GRPO/outputs/sample_trajectory_train")
+                save_dir = Path(__file__).resolve().parents[4] / "outputs" / "sample_trajectory_train"
                 save_dir.mkdir(parents=True, exist_ok=True)
                 file_path = save_dir / f"traj_rank{rank}_sample{sample_index}.pt"
                 torch.save(traj_data, file_path)

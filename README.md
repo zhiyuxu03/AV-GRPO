@@ -36,15 +36,12 @@ cd /path/to/AV-GRPO
 pip install -r requirements.txt
 ```
 
-### 🔍 Step 4: Replace paths in the following files
+### 🔍 Step 4: Replace paths in the configuration file
 
-Use a search command to find `.../AV-GRPO/` in the files below and replace all occurrences with your actual file path. **Make sure not to miss any.**
+Use a search command to find `.../AV-GRPO/` in the file below and replace all occurrences with your actual file path. **Make sure not to miss any.**
 
 | File | Description |
 |------|-------------|
-| `.../AV-GRPO/packages/ltx-trainer/src/ltx_trainer/trainer.py` | Training loop |
-| `.../AV-GRPO/packages/ltx-trainer/src/ltx_trainer/validation_sampler.py` | Sampler |
-| `.../AV-GRPO/packages/ltx-trainer/src/ltx_trainer/reward_computation.py` | Reward computation |
 | `.../AV-GRPO/packages/ltx-trainer/configs/ltx2_av_lora.yaml` | Training config |
 
 ### 📝 Step 5: Configure WandB 
