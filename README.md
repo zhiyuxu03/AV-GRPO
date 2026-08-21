@@ -7,7 +7,7 @@
 
 ## 📋 Overview
 
-AV-GRPO is the first GRPO framework designed for joint audio-video generation models. It enables full-parameter training or LoRA training of the 22B LTX-2.3 model on just **8 A800 GPUs**.
+AV-GRPO, to our knowledge, is the first GRPO framework designed for joint audio-video generation models. It enables full-parameter training or LoRA training of the 22B LTX-2.3 model on just **8 A800 GPUs**.
 
 ---
 
