@@ -485,8 +485,8 @@ class LtxvTrainer:
                 total = self._config.optimization.steps
 
                 
-                start_lr = 1e-5          
-                peak_lr = 1e-5          
+                start_lr = 1e-6          
+                peak_lr = 1e-6          
                 final_lr = 0          
                 warmup_steps = 1       
 
