@@ -86,7 +86,6 @@ python merge_lora.py
 
 ```bash
 huggingface-cli download --resume-download Dr-Loser/AV-GRPO AV-GRPO_FULL.safetensors
-huggingface-cli download --resume-download Dr-Loser/AV-GRPO AV-GRPO_lora.safetensors
 ```
 
 ### ▶️ Run inference
