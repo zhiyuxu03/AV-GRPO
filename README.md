@@ -149,4 +149,4 @@ python3 inference.py \
 
 ## ⚠️ License
 
-Research use only. See individual submodule licenses (JavisDiT, LTX, etc.) for their terms.
+See individual submodule licenses (JavisDiT, LTX, etc.) for their terms.
