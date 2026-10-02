@@ -213,7 +213,7 @@ class VideoVLMRewardInference():
 
 
 if __name__ == "__main__":
-    load_from_pretrained = LOCAL_MODEL_PATH = "/mnt/petrelfs/zhiyuxu/fix/JavisDiT/checkpoints/VideoReward/checkpoint-11352/model.pth"
+    load_from_pretrained = "./checkpoints"
     device = "cuda:0"
     dtype = torch.bfloat16
 
