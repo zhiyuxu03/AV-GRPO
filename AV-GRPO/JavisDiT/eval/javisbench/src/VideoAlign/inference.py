@@ -52,7 +52,7 @@ class VideoVLMRewardInference():
             model_config=model_config,
             peft_lora_config=peft_lora_config,
             training_args=training_args,
-        )  # ✅ 删掉多余参数，完美匹配
+        )
 
         self.device = device
 
@@ -234,5 +234,6 @@ if __name__ == "__main__":
     with torch.no_grad():
         rewards = inferencer.reward(video_paths, prompts, use_norm=True)
         print(rewards)
+
 
 
